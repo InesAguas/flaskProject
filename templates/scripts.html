@@ -1,0 +1,108 @@
+<script type="text/javascript" charset="utf-8">
+    var socket = io('http://127.0.0.1:5000/');
+    var labels = {{ labels|safe }}
+    var sensorChart = new Chart($("#sensorChart"), {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                data: {{ data }},
+                label: "Soil humidity",
+                borderColor: "#3e95cd",
+                fill: false
+            }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+            title: {
+                display: true,
+                text: 'Soil humidity'
+            }
+        },
+        scales: {
+            x: {
+                display: true
+            },
+            y: {
+                display: true
+            }
+        }
+        }
+    });
+
+var gauge = new RadialGauge({
+    renderTo: 'testeg',
+    width: 200,
+    height: 200,
+    minValue: 0,
+    maxValue: 100,
+    majorTicks: [
+        "0",
+        "10",
+        "20",
+        "30",
+        "40",
+        "50",
+        "60",
+        "70",
+        "80",
+        "90",
+        "100",
+    ],
+    minorTicks: 5,
+    strokeTicks: true,
+    colorPlate: "#fff",
+    borderShadowWidth: 0,
+    borders: false,
+    needleType: "arrow",
+    needleWidth: 2,
+    needleCircleSize: 7,
+    needleCircleOuter: true,
+    needleCircleInner: false,
+    animationDuration: 1500,
+    animationRule: "linear",
+    value: {% if data %}{{ data[-1] }}{% else %}0{% endif %}
+    }).draw();
+
+    socket.on('weather', function(data) {
+        data = JSON.parse(data);
+        $("#tempnow").text(data.now[1]);
+        $("#precipitation").text(data.now[2]);
+        $("#phrasenow").text(data.now[0]);
+
+        $("#todaydate").text(moment().format('DD/MM'));
+        $("#mintemp1").text(data.multiple[0][0]);
+        $("#maxtemp1").text(data.multiple[0][1]);
+
+        $("#tomorrowdate").text(moment().add(1, 'days').format('DD/MM'));
+        $("#mintemp2").text(data.multiple[1][0]);
+        $("#maxtemp2").text(data.multiple[1][1]);
+
+        $("#aftertomorrowdate").text(moment().add(2, 'days').format('DD/MM'));
+        $("#mintemp3").text(data.multiple[2][0]);
+        $("#maxtemp3").text(data.multiple[2][1]);
+        console.log(data);
+    });
+
+    socket.on('soilhumidity', function(data) {
+        data = JSON.parse(data);
+        sensorChart.data.datasets[0].data.push(data.soilhumidity);
+        sensorChart.data.labels.push(data.date);
+        sensorChart.update();
+        gauge.value = data.soilhumidity;
+    });
+
+    socket.on('watering', function(data) {
+        data = JSON.parse(data);
+        $("#lastwatered").text(data["lastwater"]);
+        $("#watering").text(data["date"]);
+        if(data["waternow"]) {
+            $("#watering_now").text("ON");
+        } else {
+           $("#watering_now").text("OFF");
+        }
+
+    });
+</script>

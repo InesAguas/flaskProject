@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Irrigation system</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="row text-center">
+            <h1>Irrigation system</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col align-self-center text-center" id="sensorLast">
+            <canvas id="testeg"></canvas>
+        </div>
+        <div class="col-7">
+            <canvas id="sensorChart"></canvas>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Sprinkler</h3>
+                    <p>Watering occurs from 16:00 to 16:30</p>
+                    <div>Last watered: <strong id="lastwatered"></strong></div>
+                    <div>Next watering prediction: <strong id="watering"></strong></div>
+                    <div>Sprinkler is curently: <strong id="watering_now"></strong></div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-7">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Oliveira do Hospital</h4>
+                    <div class="row">
+                        <div class="col-6">
+                            <h5 id="todaydate"></h5>
+                            <p class="mb-2">Now: <strong id="tempnow"></strong>ºC</p>
+                            <p class="mb-2">Min: <strong id="mintemp1"></strong>ºC Max: <strong id="maxtemp1"></strong>ºC</p>
+                            <p class="mb-2">Precipitaion: <strong id="precipitation"></strong>%</p>
+                            <div class="d-flex flex-row align-items-center">
+                                <p class="mb-0 me-4" id="phrasenow"></p>
+                                <i class="fas fa-cloud fa-3x" style="color: #eee;"></i>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <h5 id="tomorrowdate"></h5>
+                            <p class="mb-2">Min: <strong id="mintemp2"></strong>ºC</p>
+                            <p class="mb-2">Max: <strong id="maxtemp2"></strong>ºC</p>
+                        </div>
+                        <div class="col">
+                            <h5 id="aftertomorrowdate"></h5>
+                            <p class="mb-2">Min: <strong id="mintemp3"></strong>ºC</p>
+                            <p class="mb-2">Max: <strong id="maxtemp3"></strong>ºC</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"
+        integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA=="
+        crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="//cdn.rawgit.com/Mikhus/canvas-gauges/gh-pages/download/2.1.7/all/gauge.min.js"></script>
+<script src="https://momentjs.com/downloads/moment.min.js"></script>
+{% include 'scripts.html' %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>
